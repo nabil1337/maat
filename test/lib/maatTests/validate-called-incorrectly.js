@@ -27,7 +27,7 @@ function processMaatValidateCalledIncorrectly() {
     it('should throw an error if the passed arguments object is not ' +
             'an object', function() {
 
-        callingValidateOnlyWithParam('yo')
+        callingValidateOnlyWithParam('name', 'yo')
                 .should.throwError(/arguments/i);
     });
 
@@ -41,7 +41,7 @@ function processMaatValidateCalledIncorrectly() {
     it('should throw an error if no arguments for validation rules ' +
             'were passed', function() {
 
-        callingValidateOnlyWithParam([])
+        callingValidateOnlyWithParam({length: 0})
                 .should.throwError(/rules/i);
     });
 }

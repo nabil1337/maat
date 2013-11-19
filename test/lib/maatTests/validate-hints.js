@@ -36,10 +36,9 @@ function processMaatValidateHints() {
         });
     });
 
-    describe('for failing validation ', function() {
+    describe('for failing validation', function() {
 
-        it('should show the name of the caller function when throwing an ' +
-        'error', function() {
+        it('should show the name of the caller function', function() {
 
             (function() {
 
@@ -48,6 +47,27 @@ function processMaatValidateHints() {
                     mt.validate(arguments, ['array']);
                 })('lookAtMeImAString');
             }).should.throwError(/meowKitty/i);
+        });
+
+        it('should show the name of the caller method when it was passed as ' +
+                'first argument', function() {
+
+            (function() {
+
+                var ExampleClass = function()
+                {
+                };
+
+                ExampleClass.prototype.giveMe = function() {
+
+                    mt.validate('giveMe', arguments, ['string']);
+                };
+
+                var instance = new ExampleClass();
+
+                instance.giveMe();
+
+            }).should.throwError(/giveMe/i);
         });
 
         it('should show the name "anonymus function" if the caller function ' +
