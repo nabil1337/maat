@@ -70,7 +70,7 @@ function processMaatValidateHints() {
             }).should.throwError(/giveMe/i);
         });
 
-        it('should show the name "anonymus function" if the caller function ' +
+        it('should show the name "anonymous function" if the caller function ' +
                 'has no name', function() {
 
             (function() {
