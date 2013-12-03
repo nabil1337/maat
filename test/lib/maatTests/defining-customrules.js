@@ -7,7 +7,7 @@ var mt     = null;
 
 describe('Maat defining custom rules', function() {
 
-    before(function() {
+    beforeEach(function() {
         mt = new Maat();
     });
 
@@ -41,14 +41,21 @@ function processMaatDefiningCustomRules() {
             (function() {
 
                 mt.defineRule('', function() {
-                    
+
                     return true;
                 });
             }).should.throwError(/name/i);
         });
+
+        it('should not throw an error when called with a non-empty string and' +
+                'a function', function() {
+
+            (function() {
+
+                mt.defineRule('myRule', function() {
+                    return true;
+                });
+            }).should.not.throwError();
+        });
     });
-
-
 }
-
-

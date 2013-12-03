@@ -41,19 +41,28 @@ Validation finally made simple.
 You can define a ``rule list`` (which is an array) for each argument.
 Rulelists can consist of ``type rules`` and/or ``filter rules``.
 
+Note: maat needs to be instantiated first. Just write something like:
+
+    var Maat = require('maat');
+    var maat   = new Maat();
+
+... or even shorter:
+
+    var maat = new (require('maat'))();
+
 ### Supported type rules
 
-``array``
-``number``
-``object``
-``string``
+* ``array``
+* ``number``
+* ``object``
+* ``string``
 
 ### Supported filter rules
 
-``optional`` The specified rules only apply, if an argument is provided
-``notNull`` By default, each type allows null. If you don't want to allow null, add ``notNull``
-``notEmpty`` This is even stricter than ``notNull`` - it doesn't allow null and the passed parameter may not be empty
-``notNaN`` Defines that a ``number`` may not be NaN
+* ``optional`` The specified rules only apply, if an argument is provided
+* ``notNull`` By default, each type allows null. If you don't want to allow null, add ``notNull``
+* ``notEmpty`` This is even stricter than ``notNull`` - it doesn't allow null and the passed parameter may not be empty
+* ``notNaN`` Defines that a ``number`` may not be NaN
 
 ### Implications
 
@@ -62,6 +71,34 @@ Rulelists can consist of ``type rules`` and/or ``filter rules``.
 * If a value has the rule ``notEmpty``, it automatically also behaves like ``notNull`` and in addition may not be empty.
 
 * If a value has the rule ``optional``, it may be undefined OR must match the other defined rules
+
+### Custom filter rules
+
+The big advantage of maat is it's cutomizability: You can add as many own
+filter rules as you like:
+
+    maat.defineRule('isYesString', function(arg) {
+
+        if ('string' === typeof arg && 'yes' === arg.toLowerCase()) {
+
+            return true;
+        }
+
+        return false;
+    });
+
+As you can see, the first argument sets the name for the rule and the second is
+the actual validator function. The value to validate is being passed to the
+validator function, which should return true if the check passes or false
+if it doesn't.
+
+You can now use ``isYesString`` exactly as you'd use ``string``, ``notEmpty`` or
+any other rule:
+
+    function myFunc(userInput) {
+
+        maat.validate(arguments, ['isYesString']);
+    }
 
 ### Function- and methodnames
 
@@ -73,10 +110,17 @@ To avoid this, simply pass the function-/methodname as first parameter:
 
     MyClass.prototype.myFunc = function(yourName) {
 
-        mt.validate('myFunc', arguments, ['string', 'notEmpty']);
+        maat.validate('myFunc', arguments, ['string', 'notEmpty']);
     };
 
 If some user now calls ``myFunc`` with a wrong type, an exception like the
 following will be thrown:
 
 ``[myFunc] Invalid argument at position 1``
+
+### Intention
+
+maat should be small and easy to use. It should not include unnecessary logic
+but instead let the user add the custom rules he desires.
+Also, it should not consume much space in a function. That's why I prefer
+an array notation over an object one.
