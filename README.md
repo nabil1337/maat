@@ -74,7 +74,7 @@ Note: maat needs to be instantiated first. Just write something like:
 
 ### Custom filter rules
 
-The big advantage of maat is it's cutomizability: You can add as many own
+The big advantage of maat is it's customizability: You can add as many own
 filter rules as you like:
 
     maat.defineRule('isYesString', function(arg) {

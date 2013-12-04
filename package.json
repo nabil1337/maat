@@ -1,17 +1,31 @@
 {
   "name": "maat",
   "description": "node.js argument validation made simple",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
+  "license": "LGPL-3.0",
   "contributors": [
     {
       "name": "Nabil Krause",
       "email": "nabil.krause@silberlicht.eu"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/nabil1337/maat.git"
+  },
+  "keywords": [
+    "argument",
+    "validation",
+    "rules"
+  ],
+    "bugs": {
+    "url": "http://github.com/nabil1337/maat/issues"
+  },
   "devDependencies": {
     "mocha": "~1.14.0",
     "should": "~2.1.0",
     "validator": "~2.0.0"
-  }
+  },
+  "main": "./lib/maat"
 }
